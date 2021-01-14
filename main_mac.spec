@@ -7,9 +7,9 @@ pf_foldr= f"{os.getcwd()}/venv/lib/python3.7/site-packages/PySide6/Qt/plugins/pl
 a = Analysis(['main.py'],
              pathex=['/Users/Leo/JetBrainWorkspace/PycharmProjects/PowerUnpacker'],
              binaries=[],
-             datas=[(pf_foldr+'libqcocoa.dylib', 'platforms'),
-                 (pf_foldr+'libqminimal.dylib', 'platforms'),
-                 (pf_foldr+'libqoffscreen.dylib', 'platforms')
+             datas=[(pf_foldr+'libqcocoa.dylib', 'Pyside6/plugins/platforms'),
+                 (pf_foldr+'libqminimal.dylib', 'Pyside6/plugins/platforms'),
+                 (pf_foldr+'libqoffscreen.dylib', 'Pyside6/plugins/platforms')
                  ],
              hiddenimports=[],
              hookspath=[],
