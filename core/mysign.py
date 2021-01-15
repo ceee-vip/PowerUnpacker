@@ -13,3 +13,4 @@ class MySignals(QObject):
     # 还可以定义其他信号
     sign_zip_label_digital = pyqtSignal(int, int)
     sign_correct_passwrod = pyqtSignal(str)
+    sign_log = pyqtSignal(str)

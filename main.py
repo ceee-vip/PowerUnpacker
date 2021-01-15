@@ -21,6 +21,7 @@ class ZipMainWindow(QMainWindow, Ui_ZipMainWindow):
         self.my_sign.sign_zip_label_digital.connect(self.set_zip_label_digital)
         self.my_sign.sign_correct_passwrod.connect(self.set_success_password)
         self.setting_button_fileopen.clicked.connect(self.open_zip_file_dialog)
+        self.my_sign.sign_log.connect(self.append_log)
 
     def start_parse_password_thread(self):
         filename = self.setting_input_file.text()
@@ -49,6 +50,9 @@ class ZipMainWindow(QMainWindow, Ui_ZipMainWindow):
         directory = QFileDialog.getOpenFileName(self, "getOpenFileName", "./",
                                                 "ALl File(*);;Rar (*.rar);;Text Files (*.zip)")
         self.setting_input_file.setText(directory[0])
+
+    def append_log(self, msg):
+        self.textEdit.append(msg)
 
 
 Program = QApplication(sys.argv)

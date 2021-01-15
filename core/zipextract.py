@@ -47,7 +47,7 @@ class PwdParser(threading.Thread):
         while not self.finish:
             try:
                 pwd = self.pwd_queue.get_nowait()
-
+                self.my_sign.sign_log.emit(f"{pwd}")
                 self.extract_one(pwd, self.z_file)
                 self.my_sign.sign_correct_passwrod.emit(f"{pwd}")
                 self.finish = True
