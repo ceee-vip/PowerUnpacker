@@ -47,7 +47,7 @@ class ZipMainWindow(QMainWindow, Ui_ZipMainWindow):
 
     def open_zip_file_dialog(self):
         directory = QFileDialog.getOpenFileName(self, "getOpenFileName", "./",
-                                                "Rar Files (*.rar);Zip Files (*.zip)")
+                                                "ALl File(*);;Rar (*.rar);;Text Files (*.zip)")
         self.setting_input_file.setText(directory[0])
 
 
