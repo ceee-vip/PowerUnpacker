@@ -1,4 +1,6 @@
+import multiprocessing
 import os
+import queue
 import zipfile
 import time
 import threading
@@ -11,16 +13,44 @@ class PwdParser(threading.Thread):
     my_sign = None
     startTime = None
     # 判断线程是否需要终止
-    flag = True
+    finish = False
+
+    pwd_queue = None
+    z_file = None
 
     def __init__(self, my_sign, config: Configuration):
         super().__init__()
         self.config = config
+        self.finish = False
         self.my_sign = my_sign
         self.startTime = time.time()
+        self.pwd_queue = multiprocessing.Queue(1000)
+        self.z_file = zipfile.ZipFile(self.config.zip_file, 'r')
 
     def run(self):
+        # start consumer
+
+        for n in range(self.config.thread_num):
+            v = threading.Thread(target=self.consumer)
+            v.start()
+            print("start", n)
+        # start producer
         self.do_main()
+        self.z_file.close()
+
+    def consumer(self):
+        while not self.finish:
+            try:
+                pwd = self.pwd_queue.get_nowait()
+                print(pwd)
+                self.extract_one(pwd, self.z_file)
+                self.my_sign.sign_correct_passwrod.emit(f"{pwd}")
+                self.finish = True
+                break
+            except :
+                # self.my_sign.sign_zip_label_digital.emit(pwd, 9999)
+                pass
+        print("exit")
 
     def extract_one(self, pwd, file):
         one = file.infolist()[0]
@@ -29,17 +59,15 @@ class PwdParser(threading.Thread):
             os.remove(one.filename)
 
     def do_main(self):
-        z_file = zipfile.ZipFile(self.config.zip_file, 'r')
-        # 开始尝试
-        for number in range(1, 9999):
-            if self.flag is True:
-                ###xxxxxxxx修改
-                time.sleep(0.001)
-                try:
-                    self.extract_one(f"{number}", z_file)
-                    self.my_sign.sign_correct_passwrod.emit(f"{number}")
-                    print(f"Success Password: {number}")
-                    self.flag = True
-                    break
-                except:
-                    self.my_sign.sign_zip_label_digital.emit(number, 9999)
+        for n in range(9999):
+            pwd = f"{n}"
+            if not self.finish:
+                self.pwd_queue.put(pwd)
+                self.my_sign.sign_zip_label_digital.emit(n, 9999)
+
+        while True:
+            time.sleep(1)
+            if self.pwd_queue.empty():
+                self.finish = True
+                print("return")
+                return
