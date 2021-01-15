@@ -2,15 +2,10 @@
 
 block_cipher = None
 
-pf_foldr= f"{os.getcwd()}/venv/lib/python3.7/site-packages/PySide6/Qt/plugins/platforms/"
-
 a = Analysis(['main.py'],
              pathex=['/Users/Leo/JetBrainWorkspace/PycharmProjects/PowerUnpacker'],
              binaries=[],
-             datas=[(pf_foldr+'libqcocoa.dylib', 'Pyside6/plugins/platforms'),
-                 (pf_foldr+'libqminimal.dylib', 'Pyside6/plugins/platforms'),
-                 (pf_foldr+'libqoffscreen.dylib', 'Pyside6/plugins/platforms')
-                 ],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
