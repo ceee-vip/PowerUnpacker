@@ -3,16 +3,11 @@
 block_cipher = None
 
 
-pf_foldr= f"{os.getcwd()}\\venv\\Lib\\site-packages\\PySide6\\plugins\\platforms\\"
 
 a = Analysis(['main.py'],
              pathex=[f"{os.getcwd()}"],
              binaries=[],
-             datas=[(pf_foldr+'qwindows.dll', 'platforms\\'),
-             (pf_foldr+'qdirect2d.dll', 'platforms\\'),
-             (pf_foldr+'qoffscreen.dll', 'platforms\\'),
-             (pf_foldr+'qminimal.dll', 'platforms\\')
-             ],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

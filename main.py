@@ -4,18 +4,18 @@ import sys
 # Import Qt GUI component
 import threading
 
-import PySide6
-from PySide6 import QtWidgets
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QApplication, QFileDialog
+from PyQt5.uic.properties import QtWidgets
 
 from core.core import Configuration
 from core.mysign import MySignals
 from core.zipextract import PwdParser
 
-dirname = os.path.dirname(PySide6.__file__)
-plugin_path = os.path.join(dirname, 'plugins', 'platforms')
-os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
+# dirname = os.path.dirname(PySide6.__file__)
+# plugin_path = os.path.join(dirname, 'plugins', 'platforms')
+# os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
 # Self Function
-from PySide6.QtWidgets import QMainWindow, QApplication, QMessageBox
+# from PySide6.QtWidgets import QMainWindow, QApplication, QMessageBox
 
 from ui.zipmain import Ui_ZipMainWindow
 
@@ -57,7 +57,7 @@ class ZipMainWindow(QMainWindow, Ui_ZipMainWindow):
         self.progress_input_result.setText("失败！ 没有找到密码")
 
     def open_zip_file_dialog(self):
-        directory = QtWidgets.QFileDialog.getOpenFileName(self, "getOpenFileName", "./",
+        directory = QFileDialog.getOpenFileName(self, "getOpenFileName", "./",
                                                           "Rar Files (*.rar);Zip Files (*.zip)")
         self.setting_input_file.setText(directory[0])
 
